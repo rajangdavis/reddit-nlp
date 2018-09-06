@@ -1,8 +1,13 @@
+// Fetch dependencies
 const axios = require("axios")
 const fs = require('fs');
 
+// These are our subs we want to get data from
 const subs = ['PrequelMemes','SequelMemes'];
 
+// Recursive function to fetch JSON Data
+// If it fails (it probably will with timeouts)
+// Just make the same request
 const getJson = async (url, sub, after) =>{
 	try{
 		let finalUrl = `${url}&after=${after}`
@@ -16,6 +21,8 @@ const getJson = async (url, sub, after) =>{
 	}
 }
 
+// Does the initially fetch and then
+// recurses forever
 subs.map(async (sub) => {
 	try{
 		let url = `https://api.pushshift.io/reddit/submission/search?subreddit=${sub}&sort=asc`
