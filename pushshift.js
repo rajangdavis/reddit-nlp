@@ -3,7 +3,9 @@ const axios = require("axios")
 const fs = require('fs');
 
 // These are our subs we want to get data from
-const subs = ['PrequelMemes','SequelMemes'];
+// const subs = ['PrequelMemes','SequelMemes'];
+
+const subs = ['OTMemes'];
 
 // Recursive function to fetch JSON Data
 // If it fails (it probably will with timeouts)
