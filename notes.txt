@@ -1,6 +1,0 @@
-Cvect or tfidif
-against data
-truncated SVD
-
-Logistic Regression
-KNN
