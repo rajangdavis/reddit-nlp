@@ -28,7 +28,7 @@ What I wanted to explore by collecting r/SequelMemes and r/PrequelMemes JSON dat
 ### Description of Data
 In order to perform this analysis, I wrote a [script in Node that fetched JSON data from the Pushshift.io API](./data_fetching/pushshift.js). This data was written to two folders ([now three folders](./data_fetching/json2/)) and contains paginated JSON files.
 
-To combine the files, I wrote a [script in Node combined the JSON files into long lists of titles](./data_fetching/merge.js). This was so that I can load 2 separate lists directly into a pandas dataframe without too much need for manipulation.
+To combine the files, I wrote a [script in Node combined the JSON files into one long list of JSON objects](./data_fetching/merge.js). This was so that I can load 2 separate lists directly into a pandas dataframe without too much need for manipulation.
 
 In total there were **13250** titles for **r/PrequelMemes** and *14600* titles for *r/SequelMemes* collected for this analysis. 
 
@@ -42,23 +42,30 @@ Here are the top 5 terms for each subreddit:
 
 ### Model Selection
 
-I tested several models and decided that a Multinomial Naive Bayes Classifier might be the most appropriate choice. This is because it offered great performance and I believe that if the goal was to classify more posts, it would scale significantly better than the best performing score which was a highly tuned Logistic Regression model.
+I tested using a Tfidf Vectorizer and Count Vectorizer with varying document frequencies and ngram ranges, a Random Forest Classifier, a Multinomial Naive Bayes Classifier, and a Bernoulli Naive Bayes Classifier. Other classifiers were tested but either performed very poorly or ran so slow that I could not complete a train test split.
 
+I decided that using a CountVectorizer with an ngram range of 1 to 3 and max document frequency of 25% with Bernoulli Naive Bayes Classifier is the most appropriate choice. This is because it offered great performance and I believe that if the goal was to classify more posts, it would scale significantly better than the best performing score which was a highly tuned Logistic Regression model. The hyperparameter values were also present in most of the top 10 performing models.
 
-    - Did you fit many models? Feel free to summarize some of your scores here.
-    - Consider useing a markdown table to make results easy to review.
-    - It should be clear which model you chose for production and why.
+Most of the hyperparameter tuning lead to more overfit models; however, my feeling is that a Bernoulli Naive Bayes is generally good with this sort of classification as it is optimized for natural language processing. The overall performance increase with parameter tuning was not significant; this is demonstrated in the following plot:
 
-<img src="./presentation/images/Frequency%20count%20of%20top%205%20words%20(with%20stop%20words;%20words%20are%20stemmed)%20-%20SequelMemes.png" alt="r/SequelMemes top 5 words">
+<img src="./presentation/images/scores_by_classifier.png" alt="Scores by Classifier">
 
+### Conclusions
+    
+Generally speaking, the selected model is 77% accurate with higher disposition of misclassification towards false positives rather than false negatives. This means that it generally mistakes posts titles from r/SequelMemes as if they were posts titles from r/PrequelMemes.
 
-4. Primary findings/conclusions/recommendations
-    - These should follow from your project
-    - You should provide an answer to your problem statement
-5. Next steps
-    - **Always** focus on the positive (it's not what you did wrong, it's what you look forward to improving).
-    - Is your model ready for production? Probably not, but you can comment on how it might get there.
-    - Does this project demonstrate skills that you think could be applied to similar problems?
+I think this makes sense because r/PrequelMemes is an older subreddit and has a larger number of posts. It may also be that there is shared language that may increase this misclassification rate given that both of these subreddits are very referenced based.
+
+I also think that these subreddits have a very similar sense of humor and that gets encoded in the titles albeit with different sets of references.
+
+### Next steps
+As far as next steps, I think some form of image classification would go a long way to reveal whether it can improve the subreddit classification or create more noise. 
+
+I do not think that there is much that I can do to improve the current accuracy score other than this. I had attempted using Singular Value Decomposition, a method to encode signal that is shared across multiple words as a means to remove noise; however, the initial scores were bad and I could not run any of the non-Naive Bayes models.
+
+I think for the most part, the model that I have selected is ready for production in that it is designed to perform generally well with text classification. I think if I were to factor in image classification, then I may have to select a different model; however, I think any Naive Bayes classifier will generally perform well with a given corpus of text.
+
+I think the main application for looking at meme titles for classification would be to better understand [virality](https://en.wikipedia.org/wiki/Viral_phenomenon) and it's impact across different internet subcultures.
 
 ## Notebooks
 [Notebooks are located here.](./notebooks/)

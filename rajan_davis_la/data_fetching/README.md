@@ -6,10 +6,4 @@ I chose this library because [I have a made a library built on top of it](https:
 
 ## Data source
 
-The [Pushshift.io Reddit API](https://pushshift.io/) was used to pull historical json data 
-
-list amount of json files
-
-## Merging data
-
-I merged the data using a script
+The [Pushshift.io Reddit API](https://pushshift.io/) was used to pull historical json data for the r/PrequelMemes and r/SequelMemes subreddits.

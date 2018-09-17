@@ -10,6 +10,5 @@ Analysis was performed in the following order:
 	- I explored the data to determine most commons words
 	- Reviewed with and without stemming and lemmatization
 	- Reviewed individual subreddits
-3. [SVD Analysis](./SVD Analysis.ipynb)
-	- I tested SVD's effect
-	- Was not successful
+3. [Further Analysis](./Further Analysis.ipynb)
+	- Intepretted my model
