@@ -3,9 +3,7 @@ const axios = require("axios")
 const fs = require('fs');
 
 // These are our subs we want to get data from
-// const subs = ['PrequelMemes','SequelMemes'];
-
-const subs = ['OTMemes'];
+const subs = ['PrequelMemes','SequelMemes'];
 
 // Recursive function to fetch JSON Data
 // If it fails (it probably will with timeouts)
@@ -13,6 +11,7 @@ const subs = ['OTMemes'];
 const getJson = async (url, sub, after) =>{
 	try{
 		let finalUrl = `${url}&after=${after}`
+		console.log(`Scraping ${finalUrl} for ${sub}`)
 		let json = await axios.get(finalUrl)
 		let data = json.data.data;
 		let lastAfter = Math.max(...data.map(x => parseInt(x.created_utc)));

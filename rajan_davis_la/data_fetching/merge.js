@@ -2,8 +2,7 @@
 const fs = require("fs")
 
 // These are the folders/subs of data that we want
-// const subs = ['PrequelMemes','SequelMemes'];
-const subs = ['OTMemes'];
+const subs = ['PrequelMemes','SequelMemes'];
 
 // Loop through each of the above
 subs.map(sub =>{
